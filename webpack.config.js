@@ -40,6 +40,7 @@ module.exports = {
       library: { type: 'var', name: 'app3' },
       filename: 'remoteEntry.js',
       exposes: {
+        './MappingTable': './src/table',
       },
       shared: { 
         ...deps,
