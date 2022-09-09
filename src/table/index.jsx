@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import { Table, Button  } from "@uitk/react";
 import styled from "styled-components";
 import {testAPI} from '../services/api'
@@ -35,6 +35,13 @@ const config = {
 
 const MappingTable= () => {
   const [users, setUsers] = useState([])
+  const [isLoggedin, setIsLoggedin] = useState(false);
+
+  useEffect(() => {
+    let jwt = localStorage.getItem("JWT");
+    if(jwt) setIsLoggedin(true);
+    if(!jwt) setIsLoggedin(false);
+  }, [])
  const getUsers = () => {
   testAPI()
   .then(result => {
@@ -55,18 +62,21 @@ const MappingTable= () => {
   })
  }
 
+ if(isLoggedin) {
   return (
-    <>
-    <StoryWrapper>
-    <Button onPress={getUsers}>
-      Get Users
-    </Button>
-    </StoryWrapper>
-  {/* <button onClick={() => getUsers()}>Get Users</button> */}
-  <Table data={users} config={config} />
-    </>
-    
-  );
+    <div>
+      <StoryWrapper>
+        <Button onPress={getUsers}>
+          Get Users
+        </Button>
+      </StoryWrapper>
+ <Table data={users} config={config} />
+    </div>
+);
+ }else {
+  return <p>Unauthorized</p>
+ }
+  
 
 }
 
