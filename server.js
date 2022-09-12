@@ -8,6 +8,6 @@ app.get('/', function (req, res) {
   res.sendFile(path.join(__dirname, 'dist', 'index.html'));
 });
 
-app.listen(3003, () => {
-  console.log("Listning on port 3003...")
+app.listen(3004, () => {
+  console.log("Listning on port 3004...")
 });

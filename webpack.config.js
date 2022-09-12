@@ -9,7 +9,7 @@ module.exports = {
     static: {
       directory: path.join(__dirname, 'dist'),
     },
-    port: 3003,
+    port: 3004,
   },
   output: {
     publicPath: 'auto',
@@ -36,11 +36,12 @@ module.exports = {
   },
   plugins: [
     new ModuleFederationPlugin({
-      name: 'app3',
-      library: { type: 'var', name: 'app3' },
+      name: 'corrections',
+      library: { type: 'var', name: 'corrections' },
       filename: 'remoteEntry.js',
       exposes: {
-        './MappingTable': './src/table',
+        './StateForm': './src/state-form',
+        './CMSForm': './src/cms-form',
       },
       shared: { 
         ...deps,
