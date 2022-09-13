@@ -4,19 +4,41 @@ import {
   FormControl,
   HelperText,
   Label,
+  Dropdown,
   Legend,
-  TextInput,
+  Card,
+  Button
 } from "@uitk/react";
+import styled from "styled-components";
+import { math } from "polished";
+import './index.css'
+const H3Styles = styled.span`
+ ${({ theme: { color, font } }) => `
+   h2 {
+     font-family: ${font.family.heading.h3.value};
+     font-size: ${font.size.heading.h3.value};
+     font-weight: ${font.weight.heading.h3.value};
+     color: ${color.text.heading.h3.value};
+     line-height: ${math(font.size.heading.h3.value + "* 1.5")};
+   }
+ `}
+`;
 
+const searchByItems= [
+  { id: "1", label: "Bypass Code", value: "Bypass Code" },
+  { id: "2", label: "Claim Data", value: "Claim Data" },
+  { id: "3", label: "Claim Id", value: "Claim Id" },
+  { id: "4", label: "Member Data", value: "Member Data" },
+];
 export const StateForm= ({stateFormHeader}) => {
 // const GeneralForm= () => {
-  const [name, setName] = useState("");
+  const [searchBy, setSearchBy] = useState("");
   const [address, setAddress] = useState("");
-  const [nameBlurred, setNameBlurred] = useState(false);
+  const [searchByBlurred, setSearchByBlurred] = useState(false);
   const [addressBlurred, setAddressBlurred] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const nameError =
-    name.length === 0 && (nameBlurred || submitted) ? "Name is required" : "";
+    name.length === 0 && (searchByBlurred || submitted) ? "Name is required" : "";
   const addressError =
     address.length === 0 && (addressBlurred || submitted)
       ? "Address is required"
@@ -26,36 +48,92 @@ export const StateForm= ({stateFormHeader}) => {
     event.preventDefault();
   };
   return (
+    <Card className="correctionsCard"
+    header={
+      <H3Styles>
+        <h2>{stateFormHeader}</h2>
+      </H3Styles>
+    }
+  >
     <Fieldset>
-      <Legend>
-        {stateFormHeader}
-        {/* Form Header */}
-        <HelperText>All fields required</HelperText>
+    <Legend>
+        Search
       </Legend>
       <form onSubmit={onSubmit}>
-        <FormControl id="required-text-input-1" error={nameError} required>
-          <Label>Name</Label>
-          <TextInput
-            onChange={(e) =>
-              setName(e.target.value)
-            }
-            onBlur={() => setNameBlurred(true)}
-            value={name}
+        <div className="grid">
+        <div className="row">
+          <div className="col">
+
+            <FormControl id="required-text-input-1" error={nameError} required className={"mt-m mb-m"}>
+          <Label>Search By</Label>         
+        <Dropdown
+        type="single"
+        items={searchByItems}
+        value={searchBy}
+        onChange={setSearchBy}
+        // onBlur={() => setSearchByBlurred(true)}
           />
         </FormControl>
-        <FormControl id="required-text-input-2" error={addressError} required>
-          <Label>Address</Label>
-          <HelperText>Apartment, building or suite number</HelperText>
-          <TextInput
-            onChange={(e) =>
-              setAddress(e.target.value)
-            }
-            onBlur={() => setAddressBlurred(true)}
-            value={address}
-          />
+
+          
+          </div>
+          <div className="col">
+         <FormControl id="required-text-input-2" error={addressError} required>
+          <Label>Category</Label>
+        <Dropdown
+        type="single"
+        items={searchByItems}
+        value={searchBy}
+        onChange={setSearchBy}
+        />
         </FormControl>
+          </div>
+          <div className="col">
+       <FormControl id="required-text-input-2" error={addressError} required>
+          <Label>State</Label>
+        <Dropdown
+        type="single"
+        items={searchByItems}
+        value={searchBy}
+        onChange={setSearchBy}
+        />
+        </FormControl>
+          </div>
+        </div>
+        
+        
+        <div className="row">
+          <div className="col">
+          <FormControl id="required-text-input-2" error={addressError} required>
+          <Label>Type Of Claim</Label>
+        <Dropdown
+        type="single"
+        items={searchByItems}
+        value={searchBy}
+        onChange={setSearchBy}
+        />
+        </FormControl>
+          </div>
+          <div className="col">
+          <FormControl id="required-text-input-2" error={addressError} required>
+          <Label>Date Type</Label>
+        <Dropdown
+        type="single"
+        items={searchByItems}
+        value={searchBy}
+        onChange={setSearchBy}
+        />
+        </FormControl>
+          </div>
+          <div className="col"></div>
+        </div>
+        
+       
+        </div>
       </form>
     </Fieldset>
+  </Card>
+    
   );
 };
 
